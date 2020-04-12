@@ -1,0 +1,61 @@
+package sec1.Exercise;
+
+public class UF {
+
+private int[] id; 
+private int[] sz; 
+private int count; 
+private int[] max;
+
+public UF(int N){
+count = N;
+id = new int[N];
+sz = new int[N];
+max = new int[N];
+for(int i = 0;i < N;i++){
+id[i] = i;
+sz[i] = 1;
+max[i] = i;
+}
+
+}
+
+public int count(){
+return count;
+}
+
+public boolean connected(int p,int q){
+return find(p) == find(q);
+}
+
+private int find(int i){
+while (id[i] != i){
+i = id[i];
+}
+return i;
+}
+
+public void union(int p,int q){
+int pId = find(p);
+int qId = find(q);
+
+if(pId == qId){
+return;
+}
+if(sz[pId] < sz[qId]){
+id[pId] = qId;
+sz[qId] += sz[pId];
+max[qId] = max[pId] > max[pId] ? max[pId] : max[qId];
+}else{
+id[qId] = pId;
+sz[pId] += sz[qId];
+max[pId] = max[pId] > max[qId] ? max[pId] : max [qId];
+}
+count--;
+}
+
+public int getMax(int i){
+return max[find(i)];
+}
+
+}
