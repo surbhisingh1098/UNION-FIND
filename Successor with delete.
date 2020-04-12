@@ -1,0 +1,53 @@
+Package sec1.Exercise;
+
+public class Successor {
+
+private int N;
+private int[] num;
+private boolean[] isRemove;
+
+public Successor(int N){
+num = new int[N];
+for(int i = 0;i < N;i++){
+num[i] = i;
+isRemove[i] = false;
+}
+}
+
+public int find(int i){
+while(i != num[i]){
+i = num[i];
+}
+return i;
+}
+
+public void remove(int index){
+if(index - 1 >= 0&&isRemove[index - 1]){
+union(index,index - 1);
+}else if(index + 1 < N&&isRemove[index + 1]){
+union(index,index + 1);
+}
+}
+
+public void union(int p,int q){
+int i = find(p);
+int j = find(q);
+if(i == j){
+return;
+}
+if(i < j){
+num[i] = j;
+}else {
+num[j] = i;
+}
+}
+
+public int getSuccessor(int x){
+int num = find(x) + 1;
+if(num < N){
+return num;
+}
+return -1;
+}
+
+}
